@@ -24,25 +24,59 @@ mutate(across(where(is.character), as.factor))
 Some of the data was uncoded for sex - sex must be just male or female
 77 of the data entries were coded sex  as blank, so we omit these.
 state of a patient must be died or alive - we adjust that as well   
-  
-# Your Question - Is dying independent of sex?
+ 
+```{r}
+str(kRdata)
+```
+ 
+ 
+## Your Question - Is dying independent of sex?
+
+$H_0$ 
+there is no difference in dying from covid 19 based on gender.
+
+$A_0$
+there is a difference in dying from covid 19 based on gender.
+
+## Methhods 
 
 
-
-
-
-
+since sex and the response is cat~cat therefore we use an analysis called cat~cat
 ## Graphical results - use ggplot commands to do this  
 
+```{r}
+# Load the ggplot2 package
+library(ggplot2)
+
+# Create a grouped bar chart
+ggplot(kRdata, aes(x = result, fill = Sex)) +
+  geom_bar(position = "dodge") +
+  labs(x = "Result", y = "Sex") +
+  ggtitle("Grouped Bar Chart of Sex and Result")
 
 
-  
+```
 
 
 
 
 
-  
+
+```{r}
+dd2 <- kRdata %>% group_by(result,Sex) %>% summarize(count=n()) %>% mutate(prcnt=count/sum(count))
+
+
+# the group_by followed by summarize(count=n())
+
+basicC <- ggplot(dd2,aes(x=Sex,y=count,fill=result))
+basicC + geom_bar(stat="identity",position="dodge")
+
+
+basicCC <- ggplot(dd2,aes(x=Sex,y=prcnt*100,fill=result)) 
+basicCC + geom_bar(stat="identity", position = "dodge")
+```
+
+this plot shows more men die from covid 19 than woman 
 ## Numerical results
 
 
