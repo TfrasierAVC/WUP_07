@@ -76,13 +76,25 @@ basicCC <- ggplot(dd2,aes(x=Sex,y=prcnt*100,fill=result))
 basicCC + geom_bar(stat="identity", position = "dodge")
 ```
 
-this plot shows more men die from covid 19 than woman 
+this plot shows more men die from covid 19 than woman.
 ## Numerical results
+```{r}
+table1 <- xtabs(~result + Sex, data=kRdata)
+rowPerc(table1)
+colPerc(table1)
+```
+
+In the table twice as many males ahd died than woman.
 
 
 ## Inferential results 
+```{r}
+chisq.test(table1)
+chisqtestGC(table1)
+fisher.test(table1)
+```
 
-
+if you are male you are 2.3 timnes more likely to die from covid 19 than if you were female.
 
 
 ## Conclusions
